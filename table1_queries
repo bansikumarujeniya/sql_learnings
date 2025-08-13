@@ -90,10 +90,13 @@ eqribqeirgbqeibeigbbqegqiergbq
 
 --------------------------------------------------------
 -1
-select name,count(name) from customer group by name;
+select name,count(*) from customer group by name;
 
 -2
 
+SELECT DISTINCT name FROM customer
+WHERE name IN (
+    SELECT c1.name FROM customer c1 JOIN customer c2 ON c1.name = c2.name AND c1.id <> c2.id);
 
 
 
