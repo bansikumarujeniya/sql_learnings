@@ -32,7 +32,7 @@ INSERT INTO customer
 VALUES
 (1, 'Mukesh Patel', 'Ahmedabad', '9998800011'),
 (2, 'Reena Shah', 'Surat', '9998800012'),
-(3, 'Mahesh Bhatt', 'Rajkot', '9998800013'),
+(3, 'Mukesh Patel', 'Rajkot', '9998800013'),
 (4, 'Sonal Joshi', 'Vadodara', '9998800014'),
 (5, 'Harshad Thakar', 'Bhavnagar', '9998800015'),
 (6, 'Nina Desai', 'Junagadh', '9998800016');

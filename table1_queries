@@ -88,6 +88,16 @@ eqribqeirgbqeibeigbbqegqiergbq
 
 
 
+--------------------------------------------------------
+-1
+select name,count(name) from customer group by name;
+
+-2
+
+
+
+
+
 
 
 
