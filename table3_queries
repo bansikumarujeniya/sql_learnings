@@ -55,6 +55,10 @@ GROUP BY state.name, country.name;
 
 
 
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 
 
 
