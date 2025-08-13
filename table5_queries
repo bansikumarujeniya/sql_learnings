@@ -1,0 +1,142 @@
+/* 1 List all books with their authors and genres. */
+
+SELECT book.title,book.author,book.genre FROM book;
+
+/* 2 Show all shifts with customer names and book titles. */
+
+SELECT shift.id,shift.borrowed_date,shift.return_date,customer1.name,book.title FROM shift
+JOIN customer1 ON shift.customer_id = customer1.id
+JOIN book ON shift.book_id = book.id;
+
+/* 3 Get a list of customers who have borrowed books in the last 7 days. */
+
+SELECT DISTINCT customer1.name FROM shift 
+JOIN customer1 ON shift.customer_id = customer1.id
+WHERE borrowed_date >= CURRENT_DATE-7;
+
+/* 4 List the books currently not returned (i.e., return_date IS NULL). */
+
+SELECT book.title FROM shift JOIN book ON shift.book_id = book.id WHERE return_date IS NULL;
+
+/* 5 Get the number of books each customer has borrowed. */
+
+SELECT customer1.name, COUNT(*) AS borrow_count FROM shift
+JOIN customer1 ON shift.customer_id = customer1.id
+GROUP BY customer1.name;
+
+/* 6 Find customers who have never borrowed a book. */
+
+SELECT customer1.name FROM customer1 WHERE id NOT IN(SELECT customer_id FROM shift);
+
+/* 7 List all customers who borrowed books by a specific author (e.g., "J.K. Rowling"). */
+
+SELECT DISTINCT customer1.name FROM shift
+JOIN customer1 ON shift.customer_id = customer1.id
+JOIN book ON shift.book_id = book.id
+WHERE book.author = 'A.P.J. Abdul Kalam';
+
+/* 8 Get books that have never been borrowed. */
+
+SELECT book.title FROM book WHERE id NOT IN(SELECT book_id FROM shift);
+
+/* 9 Find customers who have borrowed more than 5 books. */
+
+SELECT customer1.name FROM shift
+JOIN customer1 ON shift.customer_id = customer1.id
+GROUP BY customer1.name HAVING COUNT(*) > 2;
+
+/* 10 Get customers who have only borrowed books from the 'Science Fiction' genre.  */
+
+SELECT customer1.name FROM shift
+JOIN customer1 ON shift.customer_id = customer1.id
+JOIN book ON shift.book_id = book.id
+GROUP BY customer1.name
+HAVING COUNT(DISTINCT book.genre) = 1 AND MAX(book.genre) = 'Fiction';
+
+/* 11 Calculate the total revenue generated from book rentals. */
+
+SELECT SUM(rental_fee) AS total_revenue FROM shift;
+
+/* 12 Find the most borrowed book. */
+
+SELECT book.title FROM shift
+JOIN book ON shift.book_id = book.id
+GROUP BY book.title
+ORDER BY COUNT(*) DESC LIMIT 1;
+
+/* 13 List genres and the total number of times books in each genre were borrowed. */
+
+SELECT book.genre, COUNT(*) AS borrow_count FROM shift 
+JOIN book ON shift.book_id = book.id 
+GROUP BY book.genre;
+
+/* 14 Find the customer with the longest total borrowing duration (sum of all shifts). */
+
+SELECT customer1.name, SUM(return_date - borrowed_date) AS total_days FROM shift
+JOIN customer1 ON shift.customer_id = customer1.id
+WHERE return_date IS NOT NULL
+GROUP BY customer1.name ORDER BY total_days DESC LIMIT 1;
+
+/* 15 Get the average borrowing time (in days) per customer. */
+
+SELECT customer1.name, AVG(return_date - borrowed_date) AS avg_days FROM shift
+JOIN customer1 ON shift.customer_id = customer1.id
+WHERE return_date IS NOT NULL
+GROUP BY customer1.name;
+
+/* 16 List all borrowings that lasted more than 10 days. */
+
+SELECT customer1.name,book.title,shift.borrowed_date,shift.return_date FROM shift
+JOIN customer1 ON shift.customer_id = customer1.id
+JOIN book ON shift.book_id = book.id
+WHERE shift.return_date IS NOT NULL AND shift.return_date - shift.borrowed_date > 10;
+
+/* 17 Get customers who borrowed books more than once in a single week. */
+
+SELECT customer1.name FROM shift
+JOIN customer1 ON shift.customer_id = customer1.id
+GROUP BY customer1.name,
+EXTRACT(YEAR FROM borrowed_date), EXTRACT(WEEK FROM borrowed_date)
+HAVING COUNT(*) > 1;
+
+/* 18 Find books that have not been borrowed in the last 3 months. */
+
+SELECT book.title FROM book 
+WHERE id NOT IN(SELECT book_id FROM shift WHERE borrowed_date >= CURRENT_DATE - 90);
+
+/* 19 List the most recent shift for each customer. */
+
+SELECT shift.* FROM shift 
+WHERE borrowed_date IN(SELECT MAX(borrowed_date)FROM shift GROUP BY customer_id);
+
+/* 20 Get a monthly report of how many books were borrowed. */
+
+SELECT EXTRACT(YEAR FROM borrowed_date) AS year,EXTRACT(MONTH FROM borrowed_date) AS month,COUNT(*) AS borrow_count FROM shift
+GROUP BY EXTRACT(YEAR FROM borrowed_date),EXTRACT(MONTH FROM borrowed_date)
+ORDER BY year,month;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
