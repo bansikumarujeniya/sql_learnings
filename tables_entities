@@ -1,0 +1,178 @@
+--1-----------------------------------------
+customer:
+
+	id  INT PRIMARY KEY,
+	name VARCHAR(100) NOT NULL,
+	city VARCHAR(50),
+	phone VARCHAR(15) UNIQUE	
+
+salesman:
+
+	id INT PRIMARY KEY,
+	name VARCHAR(100) NOT NULL,
+	phone VARCHAAR(15) UNIQUE,
+	city VARCHAR(25),
+	commision DECIMAL(5,2)
+
+order:
+
+	id INT PRIMARY KEY,
+	date DATE NOT NULL,
+	amount DECIMAL(10,2) NOT NULL,		
+	customer_id INT FOREIGN KEY,
+	salesman_id INT FOREIGN KEY
+
+
+--2------------------------------------------
+Employee:
+
+	id INT PRIMARY KEY,
+	name VARCHAR(100) NOT NULL,
+	position VARCHAR(100),
+	salary DECIMAL(10,2),
+	manager_id INT FOREIGN KEY
+
+Manager: 
+
+	id INT PRIMARY KEY,
+	name VARCHAR(100) NOT NULL,
+	department VARCHAR(50) NOT NULL
+
+--3------------------------------------------
+Country:
+
+	id INT PRIMARY KEY,
+	name VARCHAR(50) UNIQUE NOT NULL
+
+State:
+
+	id INT PRIMARY KEY,
+	name VARCHAR(50) NOT NULL,
+	country_id INT FOREIGN KEY NOT NULL
+
+Department:
+
+	id INT PRIMARY KEY,
+	name VARCHAR(50) NOT NULL,UNIQUE
+
+Job:
+
+	id INT PRIMARY KEY,
+	title VARCHAR(50) UNIQUE NOT NULL,
+	salary DECIMAL(10,2) NOT NULL	
+
+Employee:
+
+	id INT PRIMARY KEY,
+	name VARCHAR(50) NOT NULL,
+	salary DECIMAL(10,2)
+	job_id INT FOREIGN KRY
+	department_id INT FOREIGN KEY
+	state_id INT FOREIGN KEY
+
+--4---------------------------------------------
+customer:
+
+	id  INT PRIMARY KEY,
+	name VARCHAR(100) NOT NULL,
+	city VARCHAR(50),
+	phone VARCHAR(15) UNIQUE		
+	
+salesman:
+
+	id INT PRIMARY KEY,
+	name VARCHAR(100) NOT NULL,
+	phone VARCHAR(15) UNIQUE,
+	commision DECIMAL(5,2) NOT NULL
+
+product:
+
+	id INT PRIMARY KEY,
+	name VARCHAR(100) NOT NULL UNIQUE,
+	price DECIMAL(10,2) NOT NULL
+	stock INT NOT NULL
+
+order:
+
+	id INT PRIMARY KEY,
+	date DATE NOT NULL,
+	amount DECIMAL(10,2) NOT NULL,
+	customer_id INT FOREIGN KEY,
+	salesman_id INT FOREIGN KEY
+	
+order_details:
+	
+	id INT PRIMARY KEY,
+	order_id INT REFERENCES orders1(id),
+	product_id INT REFERENCES product(id),
+	quantity INT NOT NULL,
+	price DECIMAL(10,2) NOT NULL	
+
+--5------------------------------------------------
+Customer:
+
+	id  INT PRIMARY KEY,
+	name VARCHAR(100) NOT NULL,
+	city VARCHAR(50),
+	phone VARCHAR(15) 
+
+Book:
+
+	id INT PRIMARY KEY,
+	title VARCHAR(100) NOT NULL,
+	author VARCHAR(100) NOT NULL,
+	price DECIMAL(8,2) NOT NULL,
+	genre VARCHAR(50)
+
+Shift:
+
+	id INT PRIMARY KEY,
+	borrowed_date DATE NOT NULL,
+	return_date DATE,
+	rental_fee DECIMAL(8,2),
+	customer_id INT REFERENCES customer1(id),
+	book_id INT REFERENCES book(id)
+
+--6-------------------------------------------------
+Customer:
+
+	id INT PRIMARY KEY,
+	name VARCHAR(100) NOT NULL,
+	city VARCHAR(50),
+	phone VARCHAR(15) UNIQUE,
+	stock_id INT FOREIGN KEY
+
+Stock:
+
+	id INT PRIMARY KEY,
+	product_name VARCHAR(100) NOT NULL UNIQUE,
+	quantity INT NOT NULL
+
+Order:
+
+	id INT PRIMARY KEY,
+	date DATE NOT NULL,
+	quantity INT NOT NULL,
+	customer_id INT FOREIGN KEY,
+	stock_id INT FOREIGN KEY
+
+
+--7---------------------------------------------------------------
+Supplier:
+
+	id INT PRIMARY KEY,
+	name VARCHAR(100) NOT NULL,
+	contact VARCHAR(50) UNIQUE
+
+Product:
+
+	id INT PRIMARY KEY,
+	name VARCHAR(100) NOT NULL UNIQUE,
+	price DECIMAL(10,2) NOT NULL,
+	supplier_id INT FOREIGN KEY NOT NULL
+
+			
+	
+	
+	
+

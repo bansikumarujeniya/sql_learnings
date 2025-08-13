@@ -1,0 +1,626 @@
+----------------------------------1
+CREATE TABLE customer(
+	id INT PRIMARY KEY,
+	name VARCHAR(100) NOT NULL,
+	city VARCHAR(50),
+	phone VARCHAR(15) UNIQUE	
+);
+
+CREATE TABLE salesman(
+	id INT PRIMARY KEY,
+	name VARCHAR(100) NOT NULL,
+	phone VARCHAAR(15) UNIQUE,
+	city VARCHAR(25),
+	commision DECIMAL(5,2)
+);
+
+CREATE TABLE orders(
+	id INT PRIMARY KEY,
+	date DATE NOT NULL,
+	amount DECIMAL(10,2) NOT NULL,		
+	customer_id INT REFERENCES customer(id),
+	salesman_id INT REFERENCES salesman(id)
+);
+
+SELECT * FROM customer;
+SELECT * FROM salesman;
+SELECT * FROM orders;
+
+--------------------------------1
+
+INSERT INTO customer
+VALUES
+(1, 'Mukesh Patel', 'Ahmedabad', '9998800011'),
+(2, 'Reena Shah', 'Surat', '9998800012'),
+(3, 'Mahesh Bhatt', 'Rajkot', '9998800013'),
+(4, 'Sonal Joshi', 'Vadodara', '9998800014'),
+(5, 'Harshad Thakar', 'Bhavnagar', '9998800015'),
+(6, 'Nina Desai', 'Junagadh', '9998800016');
+
+INSERT INTO salesman
+VALUES
+(1, 'Jayesh Patel', '9876543210','Surat',0.89),
+(2, 'Kiran Mehta', '9876543211','Vadodara',0.42),
+(3, 'Anil Solanki', '9876543212','Rajkot',0.29),
+(4, 'Bhavin Trivedi', '9876543213','Ahmedabad',0.89),
+(5, 'Manish Joshi', '9876543214','Bhavnagar',0.99),
+(6, 'Rakesh Desai', '9876543215','Junagadh',0.69);
+
+INSERT INTO orders
+VALUES
+(1, '2022-08-01', 500.00, 1, 1),
+(2, '2022-01-02', 1800.50, 1, 2),
+(3, '2023-05-03', 2200.75, 1, 3),
+(4, '2023-07-25', 1450.00, 1, 4),
+(5, '2020-06-18', 1300.00, 1, 5),
+(6, '2021-10-20', 2000.00, 2, 1),
+(7, '2021-12-02', 2100.00, 3, 2),
+(8, '2025-07-03', 1600.00, 4, 3),
+(9, '2024-03-31', 11800.00, 5, 4),
+(10, '2025-01-05', 17500.00, 2, 5),
+(11, '2025-04-06', 1900.00, 3, 2),
+(12, '2025-07-15', 1950.00, 4, 1),
+(13, '2025-07-15', 2050.00, 5, 2),
+(14, '2025-03-19', 3150.00, 2, 3),
+(15, '2025-04-14', 1700.00, 3, 4),
+(16, '2025-02-08', 1600.00, 4, 5),
+(17, '2024-09-17', 23000.00, 5, 4),
+(18, '2024-07-13', 22400.00, 3, 1),
+(19, '2025-06-20', 400.00, 2, 2),
+(20, '2024-10-29', 14000.00, 5, 3);
+
+
+--------------------------------2
+
+CREATE TABLE manager(
+	id INT PRIMARY KEY,
+	name VARCHAR(100) NOT NULL,
+	department VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE employee(
+	id INT PRIMARY KEY,
+	name VARCHAR(100) NOT NULL,
+	position VARCHAR(100),
+	salary DECIMAL(10,2),
+	manager_id INT REFERENCES manager(id)
+);
+
+SELECT * FROM employee;
+SELECT * FROM manager;
+
+------------------------------2
+
+INSERT INTO manager
+VALUES
+(1, 'Kirit Patel', 'Sales'),
+(2, 'Dinesh Shah', 'IT'),
+(3, 'Anita Mehta', 'Finance'),
+(4, 'Bhavesh Joshi', 'HR'),
+(5, 'Jignesh Thakkar', 'IT'),
+(6, 'Meena Desai', 'Operations'),
+(7, 'Rupesh Bhatt', 'Procurement'),
+(8, 'Priya Solanki', 'Legal'),
+(9, 'Suresh Dave', 'IT'),   
+(10,'Nisha Trivedi', 'Admin');  
+
+INSERT INTO employee
+VALUES
+(1, 'Ravi Patel', 'Sales Executive', 45000.00, 1),
+(2, 'Kamini Shah', 'Sales Rep', 42000.00, 1),
+(3, 'Amit Mehta', 'Marketing Exec', 47000.00, 2),
+(4, 'Nilesh Thakkar', 'SEO Analyst', 43000.00, 2),
+(5, 'Bharti Joshi', 'Finance Analyst', 50000.00, 3),
+(6, 'Kunal Desai', 'Accountant', 48000.00, 3),
+(7, 'Hiren Shah', 'HR Officer', 46000.00, 4),
+(8, 'Meera Solanki', 'Recruiter', 44000.00, 4),
+(9, 'Darshan Bhatt', 'Software Dev', 60000.00, 5),
+(10,'Vishal Patel', 'Sys Admin', 55000.00, 5),
+(11,'Heena Dave', 'Ops Manager', 58000.00, 6),
+(12,'Yash Shah', 'Shift Lead', 52000.00, 6),
+(13,'Deepa Joshi', 'Procurement Exec', 53000.00, 7),
+(14,'Arjun Thakkar', 'Vendor Manager', 54000.00, 7),
+(15,'Neha Mehta', 'Legal Advisor', 62000.00, 8),
+(16,'Hardik Solanki', 'Compliance Officer', 61000.00, 8),
+(17,'Sneha Desai', 'Billing Analyst', 47000.00, 3),
+(18,'Rohit Patel', 'Jr Developer', 51000.00, 5),
+(19,'Payal Shah', 'Marketing Intern', 40000.00, 2),
+(20,'Manav Joshi', 'HR Trainee', 39000.00, 4);
+
+-----------------------------3
+
+CREATE 	TABLE country(
+	id INT PRIMARY KEY,
+	name VARCHAR(50) UNIQUE NOT NULL
+);
+
+CREATE TABLE state(
+	id INT PRIMARY KEY,
+	name VARCHAR(50) NOT NULL,
+	country_id INT NOT NULL REFERENCES country(id)
+);
+
+CREATE TABLE department(
+	id INT PRIMARY KEY,
+	name VARCHAR(50) NOT NULL,UNIQUE
+);
+
+CREATE TABLE job(
+	id INT PRIMARY KEY,
+	title VARCHAR(50) UNIQUE NOT NULL,
+	salary DECIMAL(10,2) NOT NULL	
+);
+
+CREATE TABLE employees(
+	id INT PRIMARY KEY,
+	name VARCHAR(50) NOT NULL,
+	salary DECIMAL(10,2),
+	job_id INT REFERENCES job(id),
+	department_id INT REFERENCES department(id),
+	state_id INT REFERENCES state(id)
+);
+
+SELECT * FROM country;
+SELECT * FROM state;
+SELECT * FROM department;
+SELECT * FROM job;
+SELECT * FROM employees;
+
+-------------------------------------3
+
+INSERT INTO country
+VALUES
+(1, 'India'),
+(2, 'USA'),
+(3, 'UK'),
+(4, 'Canada'),
+(5, 'Australia');
+
+INSERT INTO state
+VALUES
+(1, 'Gujarat', 1),
+(2, 'Maharashtra', 1),
+(3, 'California', 2),
+(4, 'Texas', 2),
+(5, 'England', 3),
+(6, 'Scotland', 3),
+(7, 'Ontario', 4),
+(8, 'Quebec', 4),
+(9, 'New South Wales', 5),
+(10, 'Victoria', 5);
+
+INSERT INTO department
+VALUES
+(1, 'Sales'),
+(2, 'Marketing'),
+(3, 'Finance'),
+(4, 'HR'),
+(5, 'IT');
+
+INSERT INTO job
+VALUES
+(1, 'Sales Executive', 45000.00),
+(2, 'Marketing Analyst', 47000.00),
+(3, 'Accountant', 50000.00),
+(4, 'HR Officer', 46000.00),
+(5, 'Software Developer', 60000.00),
+(6, 'System Admin', 55000.00),
+(7, 'Digital Marketer', 48000.00),
+(8, 'Recruiter', 43000.00),
+(9, 'Finance Analyst', 52000.00),
+(10, 'Data Analyst', 58000.00);
+
+INSERT INTO employees
+VALUES
+(1, 'Ravi Patel', 45000.00, 1, 1, 1),
+(2, 'Meena Shah', 47000.00, 2, 2, 2),
+(3, 'Bhavesh Desai', 50000.00, 3, 3, 3),
+(4, 'Kiran Mehta', 46000.00, 4, 3, 4),
+(5, 'Vishal Thakar', 60000.00, 5, 5, 5),
+(6, 'Sneha Joshi', 55000.00, 6, 5, 6),
+(7, 'Amit Solanki', 48000.00, 7, 2, 7),
+(8, 'Neha Trivedi', 43000.00, 8, 1, 8),
+(9, 'Yash Dave', 52000.00, 9, 3, 9),
+(10, 'Darshan Bhatt', 58000.00, 10, 3, 10),
+(11, 'Heena Patel', 47000.00, 1, 1, 1),
+(12, 'Rohit Shah', 46000.00, 2, 2, 2),
+(13, 'Deepa Mehta', 50000.00, 3, 3, 3),
+(14, 'Manav Joshi', 46000.00, 4, 2, 4),
+(15, 'Komal Desai', 60000.00, 5, 5, 5),
+(16, 'Nikhil Thakar', 55000.00, 6, 5, 6),
+(17, 'Payal Solanki', 48000.00, 7, 2, 7),
+(18, 'Raj Trivedi', 43000.00, 8, 5, 8),
+(19, 'Simran Dave', 52000.00, 9, 3, 9),
+(20, 'Tushar Bhatt', 58000.00, 10, 3, 10);
+
+-------------------------------------4
+
+CREATE TABLE customers(
+	id  INT PRIMARY KEY,
+	name VARCHAR(100) NOT NULL,
+	city VARCHAR(50),
+	phone VARCHAR(15) UNIQUE
+);
+
+CREATE TABLE salesmans(
+	id INT PRIMARY KEY,
+	name VARCHAR(100) NOT NULL,
+	phone VARCHAR(15) UNIQUE,
+	commision DECIMAL(5,2) NOT NULL
+);
+
+CREATE TABLE product(
+	id INT PRIMARY KEY,
+	name VARCHAR(100) NOT NULL UNIQUE,
+	price DECIMAL(10,2) NOT NULL,
+	category VARCHAR(25) NOT NULL,
+	stock INT NOT NULL
+);
+
+CREATE TABLE orders1(
+	id INT PRIMARY KEY,
+	date DATE NOT NULL,
+	amount DECIMAL(10,2) NOT NULL,
+	customer_id INT REFERENCES customers(id),
+	salesman_id INT REFERENCES salesmans(id)
+);
+
+CREATE TABLE orders_details(
+	id INT PRIMARY KEY,
+	order_id INT REFERENCES orders1(id),
+	product_id INT REFERENCES product(id),
+	quantity INT NOT NULL,
+	price DECIMAL(10,2) NOT NULL	
+);
+
+SELECT * FROM customers;
+SELECT * FROM salesmans;
+SELECT * FROM product;
+SELECT * FROM orders1;
+SELECT * FROM orders_details;
+
+----------------------------------4
+
+INSERT INTO customers
+VALUES
+(1, 'Ravi Patel', 'Ahmedabad', '9100000001'),
+(2, 'Meena Shah', 'Surat', '9100000002'),
+(3, 'Bhavesh Mehta', 'Rajkot', '9100000003'),
+(4, 'Kiran Joshi', 'Vadodara', '9100000004'),
+(5, 'Sneha Thakkar', 'Bhavnagar', '9100000005'),
+(6, 'Dinesh Desai', 'Junagadh', '9100000006'),
+(7, 'Nikita Solanki', 'Gandhinagar', '9100000007'),
+(8, 'Hitesh Bhatt', 'Jamnagar', '9100000008'),
+(9, 'Asha Dave', 'Nadiad', '9100000009'),
+(10,'Raj Trivedi', 'Anand', '9100000010'),
+(11,'Komal Patel', 'Vapi', '9100000011'),
+(12,'Arjun Shah', 'Surendranagar', '9100000012'),
+(13,'Payal Mehta', 'Morbi', '9100000013'),
+(14,'Manish Thakkar', 'Navsari', '9100000014'),
+(15,'Heena Joshi', 'Bharuch', '9100000015'),
+(16,'Tushar Desai', 'Amreli', '9100000016'),
+(17,'Darsh Solanki', 'Porbandar', '9100000017'),
+(18,'Nidhi Bhatt', 'Patan', '9100000018'),
+(19,'Yash Dave', 'Botad', '9100000019'),
+(20,'Pooja Trivedi', 'Dahod', '9100000020');
+
+INSERT INTO salesmans
+VALUES
+(1, 'Jayesh Patel', '9000000001', 0.42),
+(2, 'Amit Shah', '9000000002',0.99 ),
+(3, 'Mehul Thakkar', '9000000003', 0.69),
+(4, 'Bhavin Mehta', '9000000004', 0.40),
+(5, 'Nilesh Joshi', '9000000005', 0.89),
+(6, 'Dipak Desai', '9000000006', 0.99),
+(7, 'Snehal Dave', '9000000007', 0.78),
+(8, 'Ramesh Solanki', '9000000008', 0.30),
+(9, 'Hitesh Bhatt', '9000000009', 0.56),
+(10,'Manish Trivedi', '9000000010', 0.89);
+
+INSERT INTO product
+VALUES
+(1, 'Laptop', 50000.00,'Electronics', 20),
+(2, 'Smartphone', 25000.00,'Electronics', 30),
+(3, 'Printer', 10000.00,'Electronics', 15),
+(4, 'Table', 12000.00,'Furniture', 25),
+(5, 'Dinnerware Set', 1500.00,'Dining', 50),
+(6, 'Mouse', 800.00,'Electronics', 60),
+(7, 'Webcam', 3000.00,'Electronics', 18),
+(8, 'Headphones', 2500.00,'Electronics', 40),
+(9, 'Egyptian cotton sheets', 22000.00,'Bedding',12),
+(10,'Router', 1800.00,'Electronics', 22);
+
+INSERT INTO orders1
+VALUES
+(1, '2020-06-25', 50000.00, 1, 1),
+(2, '2020-09-15', 25000.00, 2, 2),
+(3, '2020-05-03', 18000.00, 3, 3),
+(4, '2021-10-19', 12000.00, 3, 3),
+(5, '2021-09-29', 3000.00, 3, 5),
+(6, '2021-02-09', 800.00, 6, 6),
+(7, '2022-01-13', 22000.00, 7, 7),
+(8, '2022-09-19', 5400.00, 8, 8),
+(9, '2022-07-08', 25000.00, 9, 9),
+(10,'2023-06-20', 1800.00, 10, 10),
+(11,'2023-09-20', 16000.00, 11, 1),
+(12,'2023-11-27', 32000.00, 12, 2),
+(13,'2023-12-13', 18000.00, 13, 3),
+(14,'2023-07-15', 2500.00, 3, 9),
+(15,'2023-10-15', 800.00, 15, 5),
+(16,'2024-08-20', 50000.00, 16, 1),
+(17,'2025-07-15', 5000.00, 17, 7),
+(18,'2025-07-22', 21000.00, 18, 8),
+(19,'2025-07-27', 9000.00, 19, 9),
+(20,'2025-07-25', 3000.00, 20, 10);
+
+INSERT INTO orders_details
+VALUES
+(1, 1, 1, 1, 50000.00),  
+(2, 2, 2, 1, 25000.00),     
+(3, 3, 4, 1, 12000.00),   
+(4, 3, 5, 2, 1500.00),     
+(5, 4, 3, 1, 10000.00),   
+(6, 4, 6, 2, 800.00),   
+(7, 5, 5, 2, 1500.00),     
+(8, 6, 6, 1, 800.00),   
+(9, 7, 2, 1, 22000.00),  
+(10, 8, 8, 2, 2500.00),     
+(11, 9, 2, 1, 25000.00),    
+(12, 10, 10, 1, 1800.00),
+(13, 11, 3, 1, 10000.00), 
+(14, 11, 1, 4, 50000.00),   
+(15, 12, 1, 1, 50000.00),
+(16, 13, 4, 1, 12000.00), 
+(17, 14, 6, 2, 800.00), 
+(18, 15, 7, 2, 3000.00), 
+(19, 16, 8, 1, 22000.00),
+(20, 17, 10, 2, 1800.00); 
+
+----------------------------------5
+
+CREATE TABLE customer1(
+	id  INT PRIMARY KEY,
+	name VARCHAR(100) NOT NULL,
+	city VARCHAR(50),
+	phone VARCHAR(15) 
+);
+
+
+CREATE TABLE book(
+	id INT PRIMARY KEY,
+	title VARCHAR(100) NOT NULL,
+	author VARCHAR(100) NOT NULL,
+	price DECIMAL(8,2) NOT NULL,
+	genre VARCHAR(50)
+);
+
+CREATE TABLE shift(
+	id INT PRIMARY KEY,
+	borrowed_date DATE NOT NULL,
+	return_date DATE,
+	rental_fee DECIMAL(8,2),
+	customer_id INT REFERENCES customer1(id),
+	book_id INT REFERENCES book(id)	
+);
+
+SELECT * FROM customer1;
+SELECT * FROM book;
+SELECT * FROM shift;
+
+---------------------------------5
+
+INSERT INTO customer1
+VALUES
+(1, 'Ravi Patel', 'Ahmedabad', '9100000001'),
+(2, 'Meena Shah', 'Junagadh', '9100000002'),
+(3, 'Bhavesh Mehta', 'Rajkot', '9100000003'),
+(4, 'Kiran Joshi', 'Vadodara', '9100000004'),
+(5, 'Sneha Thakkar', 'Bhavnagar', '9100000005'),
+(6, 'Dinesh Desai', 'Junagadh', '9100000006'),
+(7, 'Nikita Solanki', 'Gandhinagar', '9100000007'),
+(8, 'Hitesh Bhatt', 'Jamnagar', '9100000008'),
+(9, 'Asha Dave', 'Nadiad', '9100000009'),
+(10,'Raj Trivedi', 'Rajkot', '9100000010');
+
+
+INSERT INTO book
+VALUES
+(1, 'Wings of Fire', 'A.P.J. Abdul Kalam', 250.00,'Autobiography'),
+(2, 'The Monk Who Sold His Ferrari', 'Robin Sharma', 300.00,'Fiction'),
+(3, 'You Can Win', 'Shiv Khera', 275.00,'Self-help book'),
+(4, 'Ignited Minds', 'A.P.J. Abdul Kalam', 80.00,'Fiction'),
+(5, 'Think and Grow Rich', 'Napoleon Hill', 320.00,'Self-help book'),
+(6, 'Rich Dad Poor Dad', 'Robert Kiyosaki', 350.00,'Personal finance'),
+(7, 'The Secret', 'Rhonda Byrne', 280.00,'Self-help book'),
+(8, 'Atomic Habits', 'James Clear', 400.00,'Self-help book'),
+(9, 'Deep Work', 'Cal Newport', 390.00,'Self-help book'),
+(10, 'Do Epic Shit', 'Ankur Warikoo', 310.00,'Self-help book');
+
+INSERT INTO shift
+VALUES
+(1, '2025-07-22', NULL, 120.00, 1, 3),
+(2, '2025-06-15', '2025-06-25', 100.00, 2, 6),
+(3, '2025-05-03', '2025-05-17', 95.00, 3, 9),
+(4, '2025-04-10', NULL, 110.00, 4, 4),
+(5, '2025-03-20', '2025-03-30', 90.00, 5, 1),
+(6, '2025-03-21', '2025-03-29', 85.00, 5, 2),
+(7, '2025-01-08', '2025-01-18', 105.00, 7, 10),
+(8, '2024-12-05', NULL, 98.00, 8, 7),
+(9, '2024-11-13', '2024-11-25', 102.00, 9, 8),
+(10, '2024-10-02', NULL, 115.00, 10, 5),
+(11, '2024-09-09', '2024-09-20', 100.00, 1, 6),
+(12, '2024-08-18', '2024-08-28', 99.00, 2, 3),
+(13, '2023-07-04', NULL, 92.00, 3, 9),
+(14, '2023-06-12', '2023-06-20', 87.00, 4, 7),
+(15, '2022-05-17', '2022-05-30', 91.00, 5, 10),
+(16, '2022-04-20', NULL, 107.00, 6, 2),
+(17, '2021-03-30', '2021-04-10', 89.00, 7, 5),
+(18, '2021-02-11', '2021-02-25', 98.00, 8, 1),
+(19, '2021-01-06', NULL, 102.00, 9, 4),
+(20, '2021-10-27', '2021-11-07', 94.00, 10, 8);
+
+update shift 
+set borrowed_date='2025-03-21',return_date='2025-03-29'
+where id=6
+
+update shift
+set customer_id = 5
+where id=6;
+
+update shift
+set customer_id = 1
+where id=19;
+
+update shift
+set book_id = 4
+where id=2;
+
+update shift
+set book_id = 9
+where id=11;
+
+
+---------------------------------6
+
+CREATE TABLE customer2(
+	id INT PRIMARY KEY,
+	name VARCHAR(100) NOT NULL,
+	city VARCHAR(50),
+	phone VARCHAR(15) UNIQUE,
+	stock_id INT REFERENCES stock(id),
+);
+
+CREATE TABLE stock(
+	id INT PRIMARY KEY,
+	product_name VARCHAR(100) NOT NULL UNIQUE,
+	quantity INT NOT NULL
+);
+
+CREATE TABLE orders2(
+	id INT PRIMARY KEY,
+	date DATE NOT NULL,
+	quantity INT NOT NULL,
+	customer_id INT REFERENCES customer2(id),
+	stock_id INT REFERENCES stock(id)
+);
+
+SELECT * FROM customer2;
+SELECT * FROM stock;
+SELECT * FROM orders2;
+
+----------------------------------6
+
+INSERT INTO customer2
+VALUES
+(1, 'Ravi Patel', 'Ahmedabad', '9100002001', 1),
+(2, 'Meena Shah', 'Surat', '9100002002', 3),
+(3, 'Bhavesh Mehta', 'Rajkot', '9100002003', 5),
+(4, 'Kiran Joshi', 'Junagadh', '9100002004', 2),
+(5, 'Sneha Thakkar', 'Bhavnagar', '9100002005', 6),
+(6, 'Dinesh Desai', 'Junagadh', '9100002006', 7),
+(7, 'Nikita Solanki', 'Gandhinagar', '9100002007', 9),
+(8, 'Hitesh Bhatt', 'Jamnagar', '9100002008', 10),
+(9, 'Raj Trivedi', 'Rajkot', '9100002009', 4),
+(10,'Asha Dave', 'Junagadh', '9100002010', 11);
+
+INSERT INTO stock
+VALUES
+(1, 'Laptop', 20),
+(2, 'Mouse', 50),
+(3, 'Keyboard', 40),
+(4, 'Monitor', 25),
+(5, 'Tablet', 30),
+(6, 'Smartphone', 35),
+(7, 'Printer', 15),
+(8, 'Scanner', 10),
+(9, 'Headphones', 45),
+(10, 'Webcam', 22),
+(11, 'Charger', 60),
+(12, 'Speakers', 18),
+(13, 'Router', 25),
+(14, 'USB Cable', 100),
+(15, 'External HDD', 12);
+
+INSERT INTO orders2
+VALUES
+(1, '2023-01-10', 2, 1, 1),
+(2, '2022-08-15', 5, 2, 3),
+(3, '2024-10-01', 1, 2, 5),
+(4, '2022-09-08', 3, 4, 2),
+(5, '2024-02-10', 2, 5, 6),
+(6, '2024-02-05', 1, 5, 7),
+(7, '2022-10-12', 4, 7, 9),
+(8, '2023-08-29', 1, 8, 10),
+(9, '2021-04-01', 6, 9, 4),
+(10,'2020-04-05', 2, 10, 11),
+(11,'2020-04-05', 3, 1, 12),
+(12,'2023-08-01', 2, 2, 13),
+(13,'2023-09-07', 5, 2, 14),
+(14,'2023-10-14', 3, 4, 15),
+(15,'2023-06-19', 1, 5, 6),
+(16,'2023-09-04', 2, 5, 8),
+(17,'2023-12-15', 4, 7, 7),
+(18,'2025-07-01', 2, 8, 5),
+(19,'2025-04-23', 3, 9, 3),
+(20,'2023-02-25', 1, 10, 2);
+
+----------------------------------7
+
+CREATE TABLE supplier(
+	id INT PRIMARY KEY,
+	name VARCHAR(100) NOT NULL,
+	contact VARCHAR(50) UNIQUE
+);
+
+CREATE TABLE products(
+	id INT PRIMARY KEY,
+	name VARCHAR(100) NOT NULL UNIQUE,
+	price DECIMAL(10,2) NOT NULL,
+	supplier_id INT NOT NULL REFERENCES supplier(id)
+);
+
+
+SELECT * FROM supplier;
+SELECT * FROM products;
+
+----------------------------------7
+
+INSERT INTO supplier
+VALUES
+(1, 'TechSource Pvt Ltd', 'techsource@gmail.com'),
+(2, 'GujCom Traders', 'gujcom@yahoo.com'),
+(3, 'DigitalMart', 'sales@digitalmart.in'),
+(4, 'BrightEdge', 'contact@brightedge.com'),
+(5, 'Elite Electronics', 'elite123@gmail.com'),
+(6, 'GadgetPoint', 'support@gadgetpoint.in'),
+(7, 'Maxtronics', 'info@maxtronics.in'),
+(8, 'Prime Supply Co', 'prime@suppliers.com'),
+(9, 'Nova Distributors', 'nova@distributors.net'),
+(10,'Advance Solutions', 'service@advsol.com');
+
+INSERT INTO products
+VALUES
+(1,  'Laptop Pro', 58000.00, 1),
+(2,  'Wireless Mouse', 850.00, 2),
+(3,  'Mechanical Keyboard', 2400.00, 2),
+(4,  '27-inch Monitor', 14500.00, 3),
+(5,  'Graphic Tablet', 6800.00, 3),
+(6,  'Smartphone Max', 29000.00, 4),
+(7,  'Laser Printer', 10500.00, 6),
+(8,  'Webcam HD', 2100.00, 9),
+(9,  'Bluetooth Headphones', 3200.00, 6),
+(10, 'External Hard Drive', 4200.00, 6),
+(11, 'Wi-Fi Router', 1800.00, 7),
+(12, 'USB Type-C Cable', 300.00, 7),
+(13, 'Smartwatch', 4900.00, 3),
+(14, 'Projector Mini', 11900.00,3 ),
+(15, 'Tablet X', 24000.00, 9),
+(16, 'Desktop CPU', 35500.00, 9),
+(17, 'Speakers 2.1', 2500.00, 10),
+(18, 'Laptop Stand', 950.00, 10),
+(19, 'Smart TV 43"', 32500.00, 1),
+(20, 'Gaming Mouse', 1600.00, 4);
+
+
+
+
