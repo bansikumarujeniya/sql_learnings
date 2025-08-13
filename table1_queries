@@ -1,0 +1,89 @@
+/* 1 Retrieve all orders placed that were handled by a salesman named 'John Doe'. */
+
+SELECT "orders".* FROM "orders" JOIN salesman ON "orders".salesman_id = salesman.id WHERE salesman.name = 'Kiran Mehta';
+
+/* 2  List the names of all customers who have not placed any orders yet.  */
+
+SELECT customer.name FROM customer LEFT JOIN "orders" ON customer.id = "orders".customer_id WHERE "orders".id IS NULL;
+
+/* 3  Calculate the total OrderAmount for each salesman. Display the SalesmanName and their TotalSales. */
+
+SELECT salesman.name AS SalesmanName, SUM("orders".amount) AS TotalSales FROM salesman 
+JOIN "orders" ON salesman.id = "orders".salesman_id GROUP BY salesman.name;
+
+/* 4 Identify the top 3 customers who have placed the highest total OrderAmount across all their orders. Display CustomerName and TotalOrderAmount. */
+
+SELECT customer.name AS CustomerName, SUM("orders".amount) AS TotalOrderAmount FROM customer
+JOIN "orders" ON customer.id = "orders".customer_id GROUP BY customer.name ORDER BY TotalOrderAmount DESC
+LIMIT 3;
+
+/* 5 Find customers whose assigned Salesman is from a different city than the customer's City. Display CustomerName, CustomerCity, SalesmanName, and SalesmanCity. */
+
+SELECT customer.name AS CustomerName,
+       customer.city AS CustomerCity,
+       salesman.name AS SalesmanName,
+       salesman.city AS SalesmanCity
+FROM customer 
+JOIN "orders" ON customer.id = "orders".customer_id 
+JOIN salesman ON "orders".salesman_id = salesman.id
+WHERE customer.city <> salesman.city;
+
+/* 6 Get all details (OrderID, CustomerName, SalesmanName, OrderAmount) for orders placed on '2025-06-15'. */
+
+SELECT "orders".id AS OrderID,
+       customer.name AS CustomerName,
+       salesman.name AS SalesmanName,
+       "orders".amount AS OrderAmount
+FROM "orders"
+JOIN customer ON "orders".customer_id = customer.id
+JOIN salesman ON "orders".salesman_id = salesman.id
+WHERE "orders".date = '2025-07-15';
+
+/* 7 For a specific OrderID (e.g., 1005), calculate the commission earned by the salesman. Commission is OrderAmount * CommissionRate. 
+Display OrderID, OrderAmount, SalesmanName, CommissionRate, and CalculatedCommission. */
+
+SELECT 
+  "orders".id AS OrderID,
+  "orders".amount AS OrderAmount,
+   salesman.name AS SalesmanName,
+   salesman.commision AS CommissionRate,
+  ("orders".amount * salesman.commision/100) AS CalculatedCommission
+FROM "orders"
+JOIN salesman ON "orders".salesman_id = salesman.id
+WHERE "orders".id = 10;
+
+/* 8 List CustomerName for customers who share the same city with their assigned Salesman. Also, display the SalesmanName and their CommissionRate. */
+
+SELECT 
+  customer.name AS CustomerName,
+  salesman.name AS SalesmanName,
+  salesman.commision AS CommissionRate
+FROM customer
+JOIN salesman ON customer.city = salesman.city;
+
+/* 9 Calculate the average OrderAmount for each customer who has placed at least one order. Display CustomerName and AverageOrderAmount. */
+
+SELECT 
+  customer.name AS CustomerName,
+  AVG("orders".amount) AS AverageOrderAmount
+FROM customer
+JOIN "orders" ON customer.id = "orders".customer_id
+GROUP BY customer.name;
+
+/* 10 Identify salesmen who currently do not have any customers assigned to them.  */
+
+SELECT 
+  salesman.name AS SalesmanName,
+  salesman.commision AS CommissionRate
+FROM salesman
+LEFT JOIN "orders" ON salesman.id = "orders".salesman_id
+WHERE "orders".id IS NULL;
+
+
+
+
+
+
+
+
+

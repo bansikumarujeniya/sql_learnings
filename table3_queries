@@ -1,0 +1,59 @@
+/* 1 List all employees with their job title.  */
+
+SELECT employees.name, job.title FROM employees JOIN job ON employees.job_id = job.id;
+
+/* 2 List all employees from the "Sales" department.  */
+
+SELECT employees.name, department.name AS department FROM employees JOIN department ON employees.department_id = department.id
+WHERE department.name = 'Sales';
+
+/* 3 Find average salary by department. */
+
+SELECT department.name AS department, AVG(employees.salary) AS average_salary FROM employees
+JOIN department ON employees.department_id = department.id
+GROUP BY department.name;
+
+/* 4 List all employees working in the United States. */
+
+SELECT employees.name, country.name AS country FROM employees
+JOIN state ON employees.state_id = state.id JOIN country ON state.country_id = country.id
+WHERE country.name = 'USA';
+
+/* 5 Get employees with salary above their job's max salary. */
+
+SELECT employees.name,employees.salary,job.title FROM employees 
+JOIN job ON employees.job_id = job.id
+WHERE NOT EXISTS(
+	SELECT 1
+	FROM employees AS other_employees
+	WHERE other_employees.job_id = employees.job_id
+	AND other_employees.salary > employees.salary
+);
+
+/* 6 Find departments without any employees. */
+
+SELECT department.name FROM department
+LEFT JOIN employees ON department.id = employees.department_id
+WHERE employees.id IS NULL;
+
+/* 7 Get the highest-paid employee in each department. */
+
+SELECT employees.name, employees.salary, department.name
+FROM employees JOIN department ON employees.department_id = department.id
+WHERE employees.id IN (
+  SELECT id FROM employees WHERE (department_id, salary) IN (
+    SELECT department_id, MAX(salary) FROM employees GROUP BY department_id
+  )
+);
+
+/* 8 Count of employees per state and country. */
+
+SELECT state.name, country.name, COUNT(*) AS employees_count FROM employees
+JOIN state ON employees.state_id = state.id JOIN country ON state.country_id = country.id
+GROUP BY state.name, country.name;
+
+
+
+
+
+
