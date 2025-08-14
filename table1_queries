@@ -100,12 +100,6 @@ select distinct c1.name,
 select name,sum(1) as name_count from customer group by name;
 
 
-SUM(1) adds the value 1 for every row in each group.
-
-Since there’s one row per record in the group, the sum is equal to the count of rows.
-
-GROUP BY name groups all customers with the same name together.
-
 
 
 
